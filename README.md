@@ -141,3 +141,10 @@ Editá `frontend/vercel.json` y reemplazá:
 - `https://YOUR-RENDER-BACKEND.onrender.com`
 
 por la URL real de tu backend en Render.
+
+
+## Cambio aplicado
+
+- El backend ahora soporta ambos formatos de origen:
+  - columnas combinadas: `Precio Unitario - Medida` y `Precio Unitario - Medida.1`
+  - columnas separadas: `Precio Unitario`, `Medida`, `Precio Unitario.1`, `Medida.1`

@@ -48,26 +48,53 @@ def read_excel_file(input_path: Path):
     raise ValueError("Formato no soportado. Solo se aceptan .xls y .xlsx")
 
 
+def normalize_price_columns(df: pd.DataFrame):
+    columns = set(df.columns)
+
+    if "Precio Unitario - Medida" in columns:
+        c_text = df["Precio Unitario - Medida"].astype(str)
+        d_text = df["Precio Unitario - Medida.1"].astype(str) if "Precio Unitario - Medida.1" in columns else pd.Series([""] * len(df))
+
+        c_num = df["Precio Unitario - Medida"].apply(to_number)
+        d_num = df["Precio Unitario - Medida.1"].apply(to_number) if "Precio Unitario - Medida.1" in columns else pd.Series([None] * len(df))
+        return c_text, d_text, c_num, d_num
+
+    if "Precio Unitario" in columns and "Medida" in columns:
+        c_price = df["Precio Unitario"]
+        c_measure = df["Medida"]
+
+        d_price = df["Precio Unitario.1"] if "Precio Unitario.1" in columns else pd.Series([None] * len(df))
+        d_measure = df["Medida.1"] if "Medida.1" in columns else pd.Series([""] * len(df))
+
+        c_text = (c_price.apply(s) + " " + c_measure.apply(s)).str.strip()
+        d_text = (d_price.apply(s) + " " + d_measure.apply(s)).str.strip()
+
+        c_num = c_price.apply(to_number)
+        d_num = d_price.apply(to_number)
+        return c_text, d_text, c_num, d_num
+
+    raise ValueError(
+        "Columnas esperadas: 'Código', 'Producto' y alguno de estos formatos: "
+        "(1) 'Precio Unitario - Medida' (+ '.1' opcional) o "
+        "(2) 'Precio Unitario', 'Medida', 'Precio Unitario.1', 'Medida.1'. "
+        f"Columnas reales: {list(df.columns)}"
+    )
+
+
 def transform_dataframe(df: pd.DataFrame, force_d_codes=None) -> pd.DataFrame:
     force_d_codes = force_d_codes or set()
 
     col_codigo = "Código"
     col_producto = "Producto"
-    col_c = "Precio Unitario - Medida"
-    col_d = "Precio Unitario - Medida.1"
 
-    required = [col_codigo, col_producto, col_c]
+    required = [col_codigo, col_producto]
     if not all(c in df.columns for c in required):
         raise ValueError(
-            "Columnas esperadas: 'Código', 'Producto', 'Precio Unitario - Medida' (+ '.1' opcional). "
+            "Faltan columnas obligatorias. "
             f"Columnas reales: {list(df.columns)}"
         )
 
-    c_text = df[col_c].astype(str)
-    d_text = df[col_d].astype(str) if col_d in df.columns else pd.Series([""] * len(df))
-
-    c_num = df[col_c].apply(to_number)
-    d_num = df[col_d].apply(to_number) if col_d in df.columns else pd.Series([None] * len(df))
+    c_text, d_text, c_num, d_num = normalize_price_columns(df)
 
     use_d = []
     for code, ct, dt in zip(df[col_codigo].astype(str), c_text, d_text):
