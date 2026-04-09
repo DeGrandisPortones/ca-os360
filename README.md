@@ -141,7 +141,7 @@ Editá `frontend/vercel.json` y reemplazá:
 - `https://YOUR-RENDER-BACKEND.onrender.com`
 
 por la URL real de tu backend en Render.
-
+asdasd
 
 ## Cambio aplicado
 
