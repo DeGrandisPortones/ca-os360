@@ -56,22 +56,6 @@ def to_number(cell):
         return None
 
 
-def normalize_code(value):
-    return s(value).strip().upper()
-
-
-def apply_price_exceptions(code, price):
-    if price is None or (isinstance(price, float) and pd.isna(price)):
-        return price
-
-    normalized_code = normalize_code(code)
-    if normalized_code in DIVIDE_BY_10_CODES:
-        return price / 10
-    if normalized_code in MULTIPLY_BY_10_CODES:
-        return price * 10
-    return price
-
-
 def code_item(codigo, producto):
     sc = s(codigo).strip()
     if producto is not None and s(producto).strip() != "" and sc.endswith("-"):
@@ -121,6 +105,18 @@ def normalize_price_columns(df: pd.DataFrame):
     )
 
 
+def adjust_price_by_code(code, price):
+    if price is None or (isinstance(price, float) and pd.isna(price)):
+        return price
+
+    normalized_code = s(code).strip()
+    if normalized_code in DIVIDE_BY_10_CODES:
+        return price / 10
+    if normalized_code in MULTIPLY_BY_10_CODES:
+        return price * 10
+    return price
+
+
 def transform_dataframe(df: pd.DataFrame, force_d_codes=None) -> pd.DataFrame:
     force_d_codes = force_d_codes or set()
 
@@ -149,7 +145,7 @@ def transform_dataframe(df: pd.DataFrame, force_d_codes=None) -> pd.DataFrame:
             selected_price = dval
         else:
             selected_price = cval
-        precio.append(apply_price_exceptions(code, selected_price))
+        precio.append(adjust_price_by_code(code, selected_price))
 
     out = pd.DataFrame({
         "Código": [code_item(c, p) for c, p in zip(df[col_codigo], df[col_producto])],

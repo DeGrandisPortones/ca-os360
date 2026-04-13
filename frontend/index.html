@@ -8,46 +8,57 @@
   </head>
   <body>
     <main class="page">
-      <section class="card" id="login-card">
-        <h1>Caños 360 Transformador</h1>
-        <p class="muted">Iniciá sesión para transformar la lista y descargar el Excel listo para importar.</p>
+      <section class="workspace-shell">
+        <section class="content-panel">
+          <section class="card" id="login-card">
+            <h1>Transformador</h1>
+            <p class="muted">Iniciá sesión para transformar la lista y descargar el Excel listo para importar.</p>
 
-        <form id="login-form" class="stack">
-          <label>
-            <span>Usuario</span>
-            <input type="text" name="username" autocomplete="username" required />
-          </label>
+            <form id="login-form" class="stack">
+              <label>
+                <span>Usuario</span>
+                <input type="text" name="username" autocomplete="username" required />
+              </label>
 
-          <label>
-            <span>Contraseña</span>
-            <input type="password" name="password" autocomplete="current-password" required />
-          </label>
+              <label>
+                <span>Contraseña</span>
+                <input type="password" name="password" autocomplete="current-password" required />
+              </label>
 
-          <button type="submit">Ingresar</button>
-        </form>
+              <button type="submit">Ingresar</button>
+            </form>
 
-        <p id="login-message" class="message" aria-live="polite"></p>
-      </section>
+            <p id="login-message" class="message" aria-live="polite"></p>
+          </section>
 
-      <section class="card hidden" id="app-card">
-        <div class="row row-between row-wrap">
-          <div>
-            <h2>Transformar archivo</h2>
-            <p class="muted">Subí la lista base en formato <strong>.xls</strong> o <strong>.xlsx</strong>.</p>
-          </div>
-          <button id="logout-btn" class="secondary" type="button">Cerrar sesión</button>
-        </div>
+          <section class="card hidden" id="app-card">
+            <div class="row row-between row-wrap app-header">
+              <div class="app-heading">
+                <div>
+                  <h2>Transformar archivo</h2>
+                  <p class="muted">Subí la lista base en formato <strong>.xls</strong> o <strong>.xlsx</strong>.</p>
+                </div>
+              </div>
+              <button id="logout-btn" class="secondary" type="button">Cerrar sesión</button>
+            </div>
 
-        <form id="transform-form" class="stack">
-          <label class="file-input">
-            <span>Archivo</span>
-            <input type="file" name="file" accept=".xls,.xlsx" required />
-          </label>
+            <form id="transform-form" class="stack">
+              <label class="file-input">
+                <span>Archivo</span>
+                <input type="file" name="file" accept=".xls,.xlsx" required />
+              </label>
 
-          <button type="submit" id="submit-btn">Transformar y descargar</button>
-        </form>
+              <button type="submit" id="submit-btn">Transformar y descargar</button>
+            </form>
 
-        <p id="transform-message" class="message" aria-live="polite"></p>
+            <p id="transform-message" class="message" aria-live="polite"></p>
+          </section>
+        </section>
+
+        <aside class="brand-panel" aria-label="Marca Caños 360">
+          <div class="brand-frame"></div>
+          <img src="./assets/logo-canos360.png" alt="Logo Caños 360" class="brand-logo" />
+        </aside>
       </section>
     </main>
 
