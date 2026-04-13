@@ -50,6 +50,45 @@ p {
   color: #94a3b8;
 }
 
+.brand {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.brand-logo {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  background: #f3f4f6;
+}
+
+.brand-logo-login {
+  max-width: 320px;
+}
+
+.brand-logo-menu {
+  width: 172px;
+  flex: 0 0 auto;
+}
+
+.app-header {
+  gap: 20px;
+}
+
+.app-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1 1 280px;
+}
+
+.app-heading h2,
+.app-heading p {
+  margin-bottom: 0;
+}
+
 .stack {
   display: grid;
   gap: 16px;
@@ -130,4 +169,24 @@ button.secondary {
 
 .hidden {
   display: none;
+}
+
+@media (max-width: 640px) {
+  .card {
+    padding: 22px;
+  }
+
+  .brand-logo-login {
+    max-width: 260px;
+  }
+
+  .brand-logo-menu {
+    width: 140px;
+  }
+
+  .app-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
 }

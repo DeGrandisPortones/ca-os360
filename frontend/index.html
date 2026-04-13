@@ -9,7 +9,15 @@
   <body>
     <main class="page">
       <section class="card" id="login-card">
-        <h1>Caños 360 Transformador</h1>
+        <div class="brand brand-login">
+          <img
+            src="./assets/logo-canos360.png"
+            alt="Logo Caños 360"
+            class="brand-logo brand-logo-login"
+          />
+        </div>
+
+        <h1>Transformador</h1>
         <p class="muted">Iniciá sesión para transformar la lista y descargar el Excel listo para importar.</p>
 
         <form id="login-form" class="stack">
@@ -30,10 +38,17 @@
       </section>
 
       <section class="card hidden" id="app-card">
-        <div class="row row-between row-wrap">
-          <div>
-            <h2>Transformar archivo</h2>
-            <p class="muted">Subí la lista base en formato <strong>.xls</strong> o <strong>.xlsx</strong>.</p>
+        <div class="row row-between row-wrap app-header">
+          <div class="app-heading">
+            <img
+              src="./assets/logo-canos360.png"
+              alt="Logo Caños 360"
+              class="brand-logo brand-logo-menu"
+            />
+            <div>
+              <h2>Transformar archivo</h2>
+              <p class="muted">Subí la lista base en formato <strong>.xls</strong> o <strong>.xlsx</strong>.</p>
+            </div>
           </div>
           <button id="logout-btn" class="secondary" type="button">Cerrar sesión</button>
         </div>
