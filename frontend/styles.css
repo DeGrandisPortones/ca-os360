@@ -27,13 +27,45 @@ body {
 }
 
 .card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   width: min(100%, 520px);
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(15, 23, 42, 0.92);
   border: 1px solid rgba(148, 163, 184, 0.18);
   border-radius: 18px;
   padding: 28px;
   box-shadow: 0 24px 80px rgba(15, 23, 42, 0.45);
   backdrop-filter: blur(10px);
+}
+
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+#login-card::before,
+#app-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("./assets/logo-canos360.png");
+  background-repeat: no-repeat;
+  filter: grayscale(1) contrast(1.05);
+  z-index: 0;
+}
+
+#login-card::before {
+  background-position: center 42%;
+  background-size: 78% auto;
+  opacity: 0.1;
+}
+
+#app-card::before {
+  background-position: right -24px top 18px;
+  background-size: 52% auto;
+  opacity: 0.08;
 }
 
 h1,
@@ -48,29 +80,6 @@ p {
 
 .muted {
   color: #94a3b8;
-}
-
-.brand {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-
-.brand-logo {
-  display: block;
-  width: 100%;
-  height: auto;
-  border-radius: 14px;
-  background: #f3f4f6;
-}
-
-.brand-logo-login {
-  max-width: 320px;
-}
-
-.brand-logo-menu {
-  width: 172px;
-  flex: 0 0 auto;
 }
 
 .app-header {
@@ -108,7 +117,7 @@ input[type="file"] {
   border: 1px solid rgba(148, 163, 184, 0.3);
   border-radius: 12px;
   padding: 12px 14px;
-  background: rgba(15, 23, 42, 0.8);
+  background: rgba(15, 23, 42, 0.88);
   color: inherit;
 }
 
@@ -176,12 +185,16 @@ button.secondary {
     padding: 22px;
   }
 
-  .brand-logo-login {
-    max-width: 260px;
+  #login-card::before {
+    background-position: center 46%;
+    background-size: 92% auto;
+    opacity: 0.08;
   }
 
-  .brand-logo-menu {
-    width: 140px;
+  #app-card::before {
+    background-position: right -22px top 12px;
+    background-size: 70% auto;
+    opacity: 0.07;
   }
 
   .app-heading {
