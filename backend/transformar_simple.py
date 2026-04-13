@@ -7,6 +7,30 @@ import pandas as pd
 
 FILTER_ZERO_AS_EMPTY = False
 
+DIVIDE_BY_10_CODES = {
+    "ALAMB140200",
+    "ALAMB140201",
+    "ALAMB140202",
+    "ALAMB140203",
+    "ALAMB140204",
+    "ALAMB140205",
+    "ALAMB140206",
+}
+
+MULTIPLY_BY_10_CODES = {
+    "CLAVO142100",
+    "CLAVO142103",
+    "CLAVO142108",
+    "CLAVO142009",
+    "CLAVO142010",
+    "CLAVO142011",
+    "CLAVO142012",
+    "CLAVO142302",
+    "CLAVO142303",
+    "CLAVO142305",
+    "CLAVO142306",
+}
+
 
 def s(x):
     try:
@@ -30,6 +54,22 @@ def to_number(cell):
         return float(keep)
     except Exception:
         return None
+
+
+def normalize_code(value):
+    return s(value).strip().upper()
+
+
+def apply_price_exceptions(code, price):
+    if price is None or (isinstance(price, float) and pd.isna(price)):
+        return price
+
+    normalized_code = normalize_code(code)
+    if normalized_code in DIVIDE_BY_10_CODES:
+        return price / 10
+    if normalized_code in MULTIPLY_BY_10_CODES:
+        return price * 10
+    return price
 
 
 def code_item(codigo, producto):
@@ -104,11 +144,12 @@ def transform_dataframe(df: pd.DataFrame, force_d_codes=None) -> pd.DataFrame:
             use_d.append(("UN" in dt.upper()) and ("KG" in ct.upper()))
 
     precio = []
-    for ud, cval, dval in zip(use_d, c_num, d_num):
+    for code, ud, cval, dval in zip(df[col_codigo], use_d, c_num, d_num):
         if ud and dval is not None:
-            precio.append(dval)
+            selected_price = dval
         else:
-            precio.append(cval)
+            selected_price = cval
+        precio.append(apply_price_exceptions(code, selected_price))
 
     out = pd.DataFrame({
         "Código": [code_item(c, p) for c, p in zip(df[col_codigo], df[col_producto])],
