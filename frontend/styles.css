@@ -3,7 +3,7 @@
   font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  background: #d8dde3;
+  background: #d7dbe0;
   color: #111827;
 }
 
@@ -14,45 +14,71 @@
 body {
   margin: 0;
   min-height: 100vh;
-  position: relative;
   overflow-x: hidden;
   background:
-    radial-gradient(circle at top, rgba(255, 255, 255, 0.9), transparent 42%),
-    linear-gradient(180deg, #d6dae0 0%, #c4cad1 46%, #e7eaee 100%);
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  background-image: url("./assets/logo-canos360.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: min(82vw, 900px) auto;
-  opacity: 0.4;
-  filter: contrast(1.08) brightness(0.98);
-  mix-blend-mode: multiply;
-  z-index: 0;
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.92), transparent 34%),
+    linear-gradient(135deg, #e5e7eb 0%, #cdd3da 44%, #bcc3cb 100%);
 }
 
 .page {
-  position: relative;
-  z-index: 1;
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 28px;
+}
+
+.workspace-shell {
+  width: min(1180px, 100%);
+  min-height: min(760px, calc(100vh - 56px));
+  display: grid;
+  grid-template-columns: minmax(360px, 0.95fr) minmax(320px, 1.05fr);
+  border-radius: 28px;
+  overflow: hidden;
+  border: 1px solid rgba(17, 24, 39, 0.1);
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.18);
+  background: rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(10px);
+}
+
+.content-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.86) 0%, rgba(239, 243, 247, 0.8) 100%);
 }
 
 .card {
   width: min(100%, 520px);
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(15, 23, 42, 0.12);
-  border-radius: 18px;
-  padding: 28px;
-  box-shadow: 0 24px 80px rgba(15, 23, 42, 0.16);
-  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(15, 23, 42, 0.09);
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: 0 18px 60px rgba(15, 23, 42, 0.1);
+}
+
+.brand-panel {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 40px;
+  background:
+    linear-gradient(145deg, rgba(244, 246, 248, 0.92) 0%, rgba(206, 212, 220, 0.92) 100%);
+}
+
+.brand-frame {
+  position: absolute;
+  inset: 56px;
+  border: 6px solid rgba(17, 24, 39, 0.88);
+  pointer-events: none;
+}
+
+.brand-logo {
+  position: relative;
+  width: min(100%, 720px);
+  max-height: 72vh;
+  object-fit: contain;
+  filter: contrast(1.08) saturate(0.94);
 }
 
 h1,
@@ -106,7 +132,7 @@ input[type="file"] {
   border: 1px solid rgba(17, 24, 39, 0.18);
   border-radius: 12px;
   padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.82);
+  background: rgba(255, 255, 255, 0.96);
   color: #111827;
 }
 
@@ -181,20 +207,53 @@ button.secondary:hover {
   display: none;
 }
 
+@media (max-width: 900px) {
+  .workspace-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-panel {
+    min-height: 280px;
+    order: -1;
+  }
+
+  .brand-frame {
+    inset: 30px;
+    border-width: 4px;
+  }
+
+  .brand-logo {
+    width: min(100%, 460px);
+    max-height: 220px;
+  }
+}
+
 @media (max-width: 640px) {
-  body::before {
-    background-size: min(125vw, 760px) auto;
-    background-position: center 42%;
-    opacity: 0.34;
+  .page {
+    padding: 18px;
+  }
+
+  .content-panel,
+  .brand-panel {
+    padding: 20px;
   }
 
   .card {
     padding: 22px;
+    border-radius: 18px;
   }
 
   .app-heading {
     align-items: flex-start;
     flex-direction: column;
     gap: 12px;
+  }
+
+  .brand-panel {
+    min-height: 220px;
+  }
+
+  .brand-frame {
+    inset: 22px;
   }
 }
